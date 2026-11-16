@@ -90,8 +90,12 @@ for attempt in {1..18}; do
         fi
       done
       if [ "$verified" = true ]; then
-        gh_atmos api --method PUT "repos/$repository/pages" -F https_enforced=true >/dev/null
-        [ "$(gh_atmos api "repos/$repository/pages" --jq .https_enforced)" = true ] || { echo "HTTPS強制の確認待ちです。"; exit 2; }
+        # The default github.io host uses GitHub’s shared TLS certificate.
+        # Per-domain certificate enforcement is only applicable after CNAME setup.
+        if [ -n "$expected_domain" ]; then
+          gh_atmos api --method PUT "repos/$repository/pages" -F https_enforced=true >/dev/null
+          [ "$(gh_atmos api "repos/$repository/pages" --jq .https_enforced)" = true ] || exit 2
+        fi
         echo "本番公開を確認しました: $site_url"
         echo "GitHub main: $published_commit"
         exit 0
