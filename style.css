@@ -5,5 +5,9 @@
 /* Reconstructed from the actual shop's four-panel vermilion noren. */
 .noren-panel{background-image:url('./images/noren-design.jpg');background-size:400% 100%;background-repeat:no-repeat}.noren-panel:nth-child(1){background-position:0 0}.noren-panel:nth-child(2){background-position:33.3333% 0}.noren-panel:nth-child(3){background-position:66.6667% 0}.noren-panel:nth-child(4){background-position:100% 0}.cloth-fallback,.cloth-note{display:none}
 @media(max-width:700px){.noren-cloth{top:70px;height:43%}.noren-welcome{bottom:110px}.noren-corner{bottom:130px}.noren-cloth .noren-panel{background-size:400% 100%}}
-@media(min-width:701px){.noren-cloth{top:84px;height:calc(64% - 84px)}.noren-welcome h2{font-size:46px;line-height:1.45}.noren-welcome{bottom:78px}.noren-kicker{margin-bottom:10px}.noren-hours{margin-top:14px}}
-@media(max-width:700px){.noren-cloth{height:clamp(165px,24svh,220px)}}
+@media(min-width:701px){.noren-cloth{top:84px;height:calc(76% - 84px)}.noren-welcome h2{font-size:46px;line-height:1.45}.noren-welcome{bottom:78px}.noren-kicker{margin-bottom:10px}.noren-hours{margin-top:14px}}
+@media(max-width:700px){.noren-cloth{height:52%}}
+
+/* A small noren brand mark with a friendly rounded shop name. */
+.brand{gap:12px}.brand-mark{width:62px;height:58px;object-fit:cover;object-position:left center;border-radius:7px;flex-shrink:0}.brand-name{display:flex;flex-direction:column;gap:7px}.logo-jp{font-family:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;font-weight:900;font-size:30px;letter-spacing:.03em}.logo-en{display:block;max-width:none;font-size:7px;letter-spacing:.12em;white-space:nowrap}.noren-welcome,.noren-corner{transition:opacity .25s}.motion-enabled .noren-welcome,.motion-enabled .noren-corner{opacity:var(--noren-open,0)}
+@media(max-width:700px){.site-header{gap:14px;padding-inline:5%}.brand{gap:9px}.brand-mark{width:47px;height:46px}.logo-jp{font-size:27px}.logo-en{font-size:6px}.header-map{padding:7px 10px;gap:10px}.brand-name{gap:5px}}

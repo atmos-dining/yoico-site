@@ -38,6 +38,7 @@
   const isControl = element => isField(element) || element?.closest?.('a,button');
 
   function paint() {
+    if (stage?.style) stage.style.setProperty('--noren-open', motionAllowed() ? String(ease(progress)) : '1');
     panels.forEach((panel, i) => {
       const delay = [0.025, 0, 0.045, 0.015][i] || 0;
       const lifted = ease(clamp((progress - delay) / (1 - delay)));
