@@ -5,8 +5,8 @@ set -euo pipefail
 cd "$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 repository='atmos-dining/yoico-site'
 expected_remote="https://github.com/${repository}.git"
-expected_url='https://atmos-dining.github.io/yoico-site/'
-expected_domain=''
+expected_url='https://yoico-nishijin.com/'
+expected_domain='yoico-nishijin.com'
 gh_bin='/Users/shutaono/.local/bin/gh'
 if [ ! -x "$gh_bin" ]; then gh_bin="$(command -v gh)"; fi
 if [ "$(git remote get-url origin)" != "$expected_remote" ]; then
@@ -66,7 +66,7 @@ remote_commit="$(git_atmos ls-remote origin refs/heads/main | cut -f1)"
 
 echo '4/5 GitHub Pagesを main / root に設定します。'
 if [ "$pages_exists" = true ]; then method=PUT; else method=POST; fi
-gh_atmos api --method "$method" "repos/$repository/pages" -f build_type=legacy -f 'source[branch]=main' -f 'source[path]=/' >/dev/null
+gh_atmos api --method "$method" "repos/$repository/pages" -f build_type=legacy -f 'source[branch]=main' -f 'source[path]=/' -f cname="$expected_domain" >/dev/null
 site_url="$(gh_atmos api "repos/$repository/pages" --jq .html_url)"
 if [ "$site_url" != "$expected_url" ] && [ "$site_url" != "http://$expected_domain/" ]; then
   echo "停止: 想定外の公開URLです: $site_url" >&2; exit 1

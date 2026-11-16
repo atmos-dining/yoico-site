@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /yoico-site/admin/
-Sitemap: https://atmos-dining.github.io/yoico-site/sitemap.xml
+Disallow: /admin/
+Sitemap: https://yoico-nishijin.com/sitemap.xml
