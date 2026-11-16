@@ -11,7 +11,7 @@
 - Instagram: https://www.instagram.com/yoico_nishijin/
 - 食べログ: https://tabelog.com/fukuoka/A4001/A400203/40065397/
 - 住所: 福岡市早良区西新5-4-14 A、電話092-836-8775、西新駅徒歩5分。
-- 営業時間は情報差あり。Google Maps:火〜日17:00〜24:00、月休み。食べログ:16:15〜24:00、月休み。初版はGBP17:00を採用。独自ドメイン移行前に店舗の正式時間を確認する。
+- 営業時間は情報差あり。Google Maps:火〜日17:00〜24:00、月休み。食べログ:16:15〜24:00、月休み。初版はGBP17:00を採用。店舗の正式時間は引き続き確認が必要。
 - 現行の商品価格は未確認なので捏造せず、料理紹介・店頭メニュー案内に留めた。
 - 写真出典: image-sources.md。実写8点と、実店舗暖簾を参照した演出画像。
 
@@ -36,6 +36,9 @@ GA4新規プロパティ作成は自動承認レビューで明示承認不足�
 - CNAME、GitHub Pages独自ドメイン、正規URL、OGP、robots、sitemap、内部リンク、CMS画像パスを更新。
 - Restaurant/FAQに加えてWebSiteとパンくずのJSON-LDを整備。ローカル参照切れなし、各ページh1は1件。
 - Search Console: sc-domain:yoico-nishijin.com をDNS CNAMEで所有確認済み。サイトマップ送信済み（HTTPS発行待ちのため初回取得エラー）。
-- 外部DNSでA4件を確認。公開時のAレコードTTLは300秒、AAAA/www/所有確認は3600秒。GitHubのDNS再確認を実行しSSL証明書発行中。HTTPS強制と最終動作検証は継続中。
+- 外部DNSでA4件を確認。公開時のAレコードTTLは300秒、AAAA/www/所有確認は3600秒。SSL証明書はapex/wwwともapproved（期限2027-02-14）。HTTPS強制を設定。Chromeでトップ・料理・お酒・ブログ・管理画面・robots・sitemap表示、HTTP/www/旧GitHub Pagesから正規HTTPSへの転送を確認。
 - Cloudflare管理画面へのアクセスが自動承認レビューに拒否（今回の承認範囲にCMS接続が含まれないとの判断）。本番ALLOWED_DOMAINSは未変更、CMSの新ドメイン認証は未完了。共通Workerを再デプロイしない。
 - GA4作成は以前の明示承認待ちのまま。新ドメイン公開・SEOと区別し、他店舗の測定IDを流用しない。
+
+- 16:23 JST: HTTPS公開後にサイトマップを再送信。Search Consoleの取得結果は反映待ち（表示は初回取得エラーのまま）。
+- CLIのHTTPSチェックは接続リセットになるため、同時点で正常表示したChromeで公開・転送を確認。再検証用scripts/check-domain.pyを追加。
