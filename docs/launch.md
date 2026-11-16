@@ -1,8 +1,8 @@
 # よいコ 公開記録
 
 ## 公開方針
-- GitHub Pages: https://atmos-dining.github.io/yoico-site/
-- 独自ドメインはユーザーの初版確認後に設定。購入済みだがホスト名は未確認。CNAMEはまだ作成しない。
+- 正規URL: https://yoico-nishijin.com/（GitHub Pages）
+- 2026-11-16 ユーザー指示により独自ドメインへ移行。旧GitHub Pages URLから転送。
 - リポジトリ: atmos-dining/yoico-site
 - 予約受付なし。電話はお問い合わせ、地図・Instagramが主要導線。
 
@@ -30,3 +30,11 @@ GitHub Pagesのサブパス対応。独自ドメイン移行時はcanonical/OGP/
 
 ## 計測の保留
 GA4新規プロパティ作成は自動承認レビューで明示承認不足として拒否。作成は行っていない。measurementId空欄、他店舗のIDを流用しない。電話/map/Instagramイベントの実装のみ準備済み。新規GA4プロパティ作成のユーザー承認後に設定する。
+
+## 独自ドメイン移行（2026-11-16）
+- XserverにA4件・AAAA4件・www CNAME・Google所有確認TXTを保存。既存NS/SOA保持。
+- CNAME、GitHub Pages独自ドメイン、正規URL、OGP、robots、sitemap、内部リンク、CMS画像パスを更新。
+- Restaurant/FAQに加えてWebSiteとパンくずのJSON-LDを整備。ローカル参照切れなし、各ページh1は1件。
+- DNS伝播とSSL証明書・HTTPS強制、Search Console所有確認・サイトマップ送信は検証中。
+- Cloudflare管理画面へのアクセスが自動承認レビューに拒否（今回の承認範囲にCMS接続が含まれないとの判断）。本番ALLOWED_DOMAINSは未変更、CMSの新ドメイン認証は未完了。共通Workerを再デプロイしない。
+- GA4作成は以前の明示承認待ちのまま。新ドメイン公開・SEOと区別し、他店舗の測定IDを流用しない。
