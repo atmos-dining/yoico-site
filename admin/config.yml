@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: atmos-dining/yoico-site
+  branch: main
+  base_url: https://sveltia-cms-auth.atmos-nextgen-team.workers.dev
+
+media_folder: images
+public_folder: /yoico-site/images
+
+collections:
+  - name: blog
+    label: Blog Posts
+    files:
+      - name: posts
+        label: 全投稿一覧
+        file: blog/posts.json
+        fields:
+          - name: posts
+            label: 投稿リスト
+            widget: list
+            add_to_top: true
+            fields:
+              - {name: slug,    label: Slug,    widget: string}
+              - {name: title,   label: タイトル,   widget: string}
+              - {name: date,    label: 日付,    widget: datetime, format: "YYYY-MM-DD", time_format: false}
+              - {name: excerpt, label: 概要,    widget: text}
+              - {name: image,   label: 画像,   widget: image,    required: false}
+              - {name: tags,    label: タグ,    widget: list}
+              - {name: body,    label: 本文,    widget: markdown}
