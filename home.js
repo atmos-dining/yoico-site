@@ -26,7 +26,7 @@
   let wheelTrough = Infinity;
   let touch = null;
   let heldKey = '';
-  const motionAllowed = () => !reduced.matches;
+  const motionAllowed = () => true;
   const clamp = value => Math.max(0, Math.min(1, value));
   const ease = value => value * value * (3 - 2 * value);
   const heroEnd = () => sceneTop + range;
@@ -56,9 +56,9 @@
     frame = 0;
     if (opening) {
       // One gesture opens the whole cloth, independent of distance or force.
-      const elapsed = clamp((time - opening.start) / OPEN_DURATION);
+      const elapsed = reduced.matches ? 1 : clamp((time - opening.start) / OPEN_DURATION);
       const amount = ease(elapsed);
-      window.scrollTo({top:opening.y + (heroEnd() - opening.y) * amount, behavior:'instant'});
+      window.scrollTo({top:opening.y + (heroEnd() - opening.y) * amount, behavior:'auto'});
       progress = target = opening.progress + (1 - opening.progress) * amount;
       if (elapsed === 1) opening = null;
       paint();
@@ -78,7 +78,7 @@
     if (!scene || !stage || !motionAllowed() || document.hidden || opening) return;
     // Also contain non-cancelable momentum events at the open HERO boundary.
     if (wheelHeld && performance.now() - lastWheel < WHEEL_GAP && window.scrollY > heroEnd()) {
-      window.scrollTo({top:heroEnd(), behavior:'instant'});
+      window.scrollTo({top:heroEnd(), behavior:'auto'});
     }
     target = clamp((window.scrollY - sceneTop) / range);
     if (!frame && target !== progress) frame = requestAnimationFrame(animate);
@@ -220,7 +220,8 @@
       previousTime = 0;
     } else configure();
   });
-  reduced.addEventListener('change', configure);
+  if (reduced.addEventListener) reduced.addEventListener('change', configure);
+  else if (reduced.addListener) reduced.addListener(configure);
   configure();
 
 })();

@@ -11,3 +11,12 @@
 /* A small noren brand mark with a friendly rounded shop name. */
 .brand{gap:12px}.brand-mark{width:62px;height:58px;object-fit:cover;object-position:left center;border-radius:7px;flex-shrink:0}.brand-name{display:flex;flex-direction:column;gap:7px}.logo-jp{font-family:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;font-weight:900;font-size:30px;letter-spacing:.03em}.logo-en{display:block;max-width:none;font-size:7px;letter-spacing:.12em;white-space:nowrap}
 @media(max-width:700px){.site-header{gap:14px;padding-inline:5%}.brand{gap:9px}.brand-mark{width:47px;height:46px}.logo-jp{font-size:27px}.logo-en{font-size:6px}.header-map{padding:7px 10px;gap:10px}.brand-name{gap:5px}}
+
+/* Keep the entrance usable in embedded WebKit and reduced-motion mode. */
+html{scroll-behavior:auto}
+@media(prefers-reduced-motion:reduce){.noren-scene.motion-enabled{height:180vh;min-height:1224px}.noren-panel,.noren-photo{transition:none!important}}
+
+/* Match the compact Umeboshi header proportions. */
+.site-header{height:76px}.brand-mark{height:46px;width:49px}.subpage main{padding-top:76px}
+@media(min-width:701px){.noren-cloth{top:76px;height:calc(68% - 76px)}}
+@media(max-width:700px){.site-header{height:64px}.brand-mark{width:40px;height:40px}.logo-jp{font-size:25px}.noren-cloth{top:64px}.subpage main{padding-top:64px}}

@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, '..', 'home.js'), 'utf8');
 
-function page({y = 0, reduced = false, line = false} = {}) {
+function page({y = 0, reduced = false, line = false, legacy = false} = {}) {
   const events = {window: {}, document: {}};
   const frames = new Map();
   let id = 0, now = 0, sceneHeight = 1440;
@@ -17,6 +17,7 @@ function page({y = 0, reduced = false, line = false} = {}) {
   const label = {};
   const button = {querySelector: () => label, addEventListener: (type, fn) => button[type] = fn};
   const media = {matches: reduced, addEventListener: (_, fn) => media.change = fn};
+  if (legacy) { media.addListener = fn => media.change = fn; delete media.addEventListener; }
   const classes = new Set();
   const scene = {get offsetHeight() {return sceneHeight;},
     getBoundingClientRect: () => ({top: -win.scrollY}),
@@ -123,14 +124,14 @@ test('navigation and End cancel the entrance instead of trapping the user', () =
 test('restored scroll, reduced motion, resize and background restoration', () => {
   const restored = page({y: 2500}); assert.equal(restored.lift(), -115); assert(!restored.wheel(60).defaultPrevented);
   for (const options of [{reduced: true}]) {
-    const p = page(options); assert(!p.wheel(20).defaultPrevented); assert(p.button.hidden); assert.equal(p.frames.size, 0);
+    const p = page(options); assert(p.wheel(20).defaultPrevented); p.advance(20); assert.equal(p.lift(), -115); assert.equal(p.button.hidden, false);
   }
   const p = page(); p.wheel(200); p.advance(300); p.resize(1760); p.advance(900); assert.equal(p.win.scrollY, 960);
   p.win.scrollTo({top: 0}); p.advance(1200); p.wheel(40); p.advance(300);
   p.doc.hidden = true; p.fire('document', 'visibilitychange'); assert.equal(p.frames.size, 0);
   p.doc.hidden = false; p.fire('document', 'visibilitychange'); assert(!p.button.disabled);
   p.wheel(1); p.advance(1200); assert.equal(p.win.scrollY, 960);
-  p.media.matches = true; p.media.change(); assert(p.button.hidden); assert.equal(p.panels[1].style.transform, '');
+  p.media.matches = true; p.media.change(); assert.equal(p.button.hidden, false);
 });
 
 test('opening takes the same time at 60 and 120 Hz', () => {
@@ -217,4 +218,15 @@ test('LINE tap opens the curtain and second tap reaches content', () => {
   p.button.click(); p.advance(1200);
   assert.equal(p.lift(), -115);
   p.button.click(); assert(p.concept.visited);
+});
+
+test('older WebKit media API still initializes the entry button', () => {
+ const p = page({line:true,legacy:true});
+ p.button.click(); p.advance(1200); assert.equal(p.lift(), -115);
+});
+test('LINE with reduced motion opens without animation and stays navigable', () => {
+ const p = page({line:true,reduced:true});
+ assert.equal(p.button.hidden,false); p.button.click(); p.advance(17);
+ assert.equal(p.lift(),-115); assert.equal(p.button.disabled,false);
+ p.button.click(); assert(p.concept.visited);
 });
