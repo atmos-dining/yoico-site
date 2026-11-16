@@ -6,7 +6,6 @@
   const photo = document.querySelector('.noren-photo');
   const enter = document.querySelector('.noren-enter');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const light = /Line\//i.test(navigator.userAgent);
   const OPEN_DURATION = 1050;
   const WHEEL_GAP = 240;
   const WHEEL_REARM_DELAY = 450;
@@ -27,7 +26,7 @@
   let wheelTrough = Infinity;
   let touch = null;
   let heldKey = '';
-  const motionAllowed = () => !reduced.matches && !light;
+  const motionAllowed = () => !reduced.matches;
   const clamp = value => Math.max(0, Math.min(1, value));
   const ease = value => value * value * (3 - 2 * value);
   const heroEnd = () => sceneTop + range;

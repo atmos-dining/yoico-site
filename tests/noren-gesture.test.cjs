@@ -120,9 +120,9 @@ test('navigation and End cancel the entrance instead of trapping the user', () =
   }
 });
 
-test('restored scroll, reduced motion, LINE, resize and background restoration', () => {
+test('restored scroll, reduced motion, resize and background restoration', () => {
   const restored = page({y: 2500}); assert.equal(restored.lift(), -115); assert(!restored.wheel(60).defaultPrevented);
-  for (const options of [{reduced: true}, {line: true}]) {
+  for (const options of [{reduced: true}]) {
     const p = page(options); assert(!p.wheel(20).defaultPrevented); assert(p.button.hidden); assert.equal(p.frames.size, 0);
   }
   const p = page(); p.wheel(200); p.advance(300); p.resize(1760); p.advance(900); assert.equal(p.win.scrollY, 960);
@@ -196,4 +196,25 @@ test('no-idle reversal and line/page delta units release intentional input', () 
   for (let i = 0; i < 150; i++) {p.advance(8); p.wheel(2);}
   p.advance(8); p.wheel(-20); p.advance(8); p.wheel(-20);
   assert(p.win.scrollY < 640);
+});
+
+// Regression: LINE used to be excluded explicitly by user-agent sniffing.
+test('LINE swipe opens fully and releases the next touch gesture', () => {
+  const p = page({line: true});
+  assert(p.classes.has('motion-enabled'));
+  assert.equal(p.button.hidden, false);
+  p.touch('touchstart', 700);
+  assert(p.touch('touchmove', 600).defaultPrevented);
+  p.advance(1200);
+  assert.equal(p.lift(), -115);
+  assert.equal(p.win.scrollY, 640);
+  p.touch('touchend'); p.touch('touchstart', 700);
+  assert.equal(p.touch('touchmove', 500).defaultPrevented, false);
+});
+test('LINE tap opens the curtain and second tap reaches content', () => {
+  const p = page({line: true});
+  assert.equal(p.button.hidden, false);
+  p.button.click(); p.advance(1200);
+  assert.equal(p.lift(), -115);
+  p.button.click(); assert(p.concept.visited);
 });
