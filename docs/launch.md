@@ -32,9 +32,10 @@ GitHub Pagesのサブパス対応。独自ドメイン移行時はcanonical/OGP/
 GA4新規プロパティ作成は自動承認レビューで明示承認不足として拒否。作成は行っていない。measurementId空欄、他店舗のIDを流用しない。電話/map/Instagramイベントの実装のみ準備済み。新規GA4プロパティ作成のユーザー承認後に設定する。
 
 ## 独自ドメイン移行（2026-11-16）
-- XserverにA4件・AAAA4件・www CNAME・Google所有確認TXTを保存。既存NS/SOA保持。
+- XserverにA4件・AAAA4件・www CNAME・Google所有確認TXT/CNAMEを保存。既存NS/SOA保持。
 - CNAME、GitHub Pages独自ドメイン、正規URL、OGP、robots、sitemap、内部リンク、CMS画像パスを更新。
 - Restaurant/FAQに加えてWebSiteとパンくずのJSON-LDを整備。ローカル参照切れなし、各ページh1は1件。
-- DNS伝播とSSL証明書・HTTPS強制、Search Console所有確認・サイトマップ送信は検証中。
+- Search Console: sc-domain:yoico-nishijin.com をDNS CNAMEで所有確認済み。サイトマップ送信済み（HTTPS発行待ちのため初回取得エラー）。
+- 外部DNSでA4件を確認。公開時のAレコードTTLは300秒、AAAA/www/所有確認は3600秒。GitHubのDNS再確認を実行しSSL証明書発行中。HTTPS強制と最終動作検証は継続中。
 - Cloudflare管理画面へのアクセスが自動承認レビューに拒否（今回の承認範囲にCMS接続が含まれないとの判断）。本番ALLOWED_DOMAINSは未変更、CMSの新ドメイン認証は未完了。共通Workerを再デプロイしない。
 - GA4作成は以前の明示承認待ちのまま。新ドメイン公開・SEOと区別し、他店舗の測定IDを流用しない。
